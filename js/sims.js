@@ -216,7 +216,7 @@ const SimTime = {
 const SimAdapt = {
   render(container, onDone) {
     renderStepSim(container, ADAPT_STEPS, 90,
-        "Tome las mejores decisiones ante un cambio curricular imprevisto del MEP.",
+        "Tome las mejores decisiones ante un cambio curricular imprevisto en su institución.",
         onDone);
   }
 };
@@ -226,14 +226,14 @@ const SimAdapt = {
 // ═══════════════════════════════════════════════════════════
 const SimComm = {
   render(container, onDone) {
-    let msgs = [{ role:"ai", sender:"Sr. Méndez", text:"Buenas tardes. Vengo porque me parece un abuso lo que pasó con Carlos. Él estudia todos los días y usted lo reprobó. ¿Qué explicación me da?" }];
+    let msgs = [{ role:"ai", sender:"Sr./Sra. Rodríguez", text:"Buenas tardes. Vengo porque me parece un abuso lo que pasó con Alejandro/a. Estudia todos los días y usted lo reprobó. ¿Qué explicación me da?" }];
     let scores = [], turns = 0, finished = false;
 
     function renderChat() {
       container.innerHTML = "";
 
       const intro = h("div", "card card-or mb4",
-          `<div class="mu">Un padre de familia molesto llega a su aula. Responda con empatía, datos concretos y orientación hacia soluciones. <strong>4 turnos evaluados por IA.</strong></div>`);
+          `<div class="mu">Un padre o madre de familia molesto llega a su aula. Responda con empatía, datos concretos y orientación hacia soluciones. <strong>4 turnos evaluados por IA.</strong></div>`);
       container.appendChild(intro);
 
       const grid = h("div", "grid2");
@@ -249,7 +249,7 @@ const SimComm = {
         <div style="padding:12px 17px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px">
           <span style="font-size:18px">🎭</span>
           <div>
-            <div class="sm bold">Simulación: Padre de Familia</div>
+            <div class="sm bold">Simulación: Familia del Estudiante</div>
             <div style="font-size:11px;color:${finished?"#2dd4a0":"#ff8c32"}">${finished?"● Completado":`● Turno ${turns+1}/4`}</div>
           </div>
           <div style="margin-left:auto;text-align:right">
@@ -302,7 +302,7 @@ const SimComm = {
 
             const ei = raw.indexOf("EVAL:");
             const charTxt = ei > 0 ? raw.substring(0, ei).trim() : raw.trim();
-            msgs.push({ role:"ai", sender:"Sr. Méndez", text:charTxt });
+            msgs.push({ role:"ai", sender:"Sr./Sra. Rodríguez", text:charTxt });
 
             let ev = null;
             if (ei > 0) {
@@ -546,7 +546,7 @@ const SimTeam = {
     function render() {
       container.innerHTML = "";
       container.appendChild(h("div", "card card-or mb4",
-          `<div class="h3 mb2">🎪 Feria Vocacional del CTP Carrizal</div>
+          `<div class="h3 mb2">🎪 Feria Vocacional del Centro Educativo</div>
          <div class="mu">Deben organizarla en 2 semanas. Asigne cada tarea al miembro más adecuado según su perfil.</div>`));
 
       const grid = h("div", "grid2");

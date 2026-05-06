@@ -5,7 +5,7 @@
 // ── MÓDULOS ──────────────────────────────────────────────────────
 const MODULES = [
   { id:"time",     ph:1, icon:"🕐", title:"Manejo del Tiempo",          hours:8,  prio:"Muy alta",   xp:120, ac:"#ef4444", tag:"tag-re", sub:"Clasifique 8 tareas docentes con la Matriz de Eisenhower", max:80  },
-  { id:"adapt",    ph:1, icon:"🌊", title:"Adaptabilidad y Resiliencia", hours:8,  prio:"Muy alta",   xp:120, ac:"#f97316", tag:"tag-re", sub:"Tome decisiones ante un cambio curricular imprevisto del MEP", max:90 },
+  { id:"adapt",    ph:1, icon:"🌊", title:"Adaptabilidad y Resiliencia", hours:8,  prio:"Muy alta",   xp:120, ac:"#f97316", tag:"tag-re", sub:"Tome decisiones ante un cambio curricular imprevisto en su institución", max:90 },
   { id:"comm",     ph:2, icon:"💬", title:"Comunicación Efectiva",       hours:6,  prio:"Alta",       xp:90,  ac:"#eab308", tag:"tag-or", sub:"Atienda a un padre de familia molesto — evaluado por IA", max:100 },
   { id:"conflict", ph:2, icon:"🤝", title:"Resolución de Conflictos",    hours:6,  prio:"Alta",       xp:90,  ac:"#a855f7", tag:"tag-or", sub:"Medie un conflicto entre estudiantes en el taller", max:100 },
   { id:"critical", ph:2, icon:"🧠", title:"Pensamiento Crítico",         hours:6,  prio:"Alta",       xp:90,  ac:"#3b82f6", tag:"tag-or", sub:"Analice la caída del rendimiento de su grupo con datos reales", max:85 },
@@ -43,7 +43,7 @@ const QUADS = [
 // ── 2. ADAPTABILIDAD ─────────────────────────────────────────────
 const ADAPT_STEPS = [
   {
-    ctx: "El lunes recibe un correo del MEP: el programa de su especialidad cambió y entra en vigor este trimestre.",
+    ctx: "El lunes recibe una comunicación oficial: el programa de su área cambió y entra en vigor este trimestre.",
     q: "¿Cuál es su primera acción?",
     opts: [
       { t:"Revisar el nuevo documento y mapear los cambios clave", s:30, ok:true, fb:"Excelente. Conocer el cambio antes de actuar es la base del pensamiento estratégico." },
@@ -75,7 +75,7 @@ const ADAPT_STEPS = [
 ];
 
 // ── 3. COMUNICACIÓN (AI) ─────────────────────────────────────────
-const COMM_SYSTEM = `Eres el Sr. Méndez, padre de familia de Carlos, estudiante que reprobó el trimestre en el CTP Carrizal, Costa Rica. Estás molesto pero no agresivo. Hablas en español costarricense informal.
+const COMM_SYSTEM = `Eres un padre o madre de familia de un estudiante que reprobó el trimestre. Estás molesto/a pero no agresivo/a. Te llamas Sr./Sra. Rodríguez y tu hijo/a se llama Alejandro/a. Hablas en español informal latinoamericano.
 
 Responde en DOS partes exactas separadas por una línea en blanco:
 1. Tu respuesta in-character como padre (2-3 oraciones naturales y emocionales).
@@ -86,7 +86,7 @@ Si el docente muestra empatía genuina, ablanda progresivamente tu postura.`;
 // ── 4. RESOLUCIÓN DE CONFLICTOS ──────────────────────────────────
 const CONFLICT_STEPS = [
   {
-    ctx: "Carlos y María discuten acaloradamente en el taller. Carlos acusa a María de romper su proyecto. El grupo observa en tensión.",
+    ctx: "Dos estudiantes discuten acaloradamente en el aula. Uno acusa al otro de dañar su trabajo. El grupo observa en tensión.",
     q: "¿Cuál es su primera respuesta?",
     opts: [
       { t:"Separar a ambos con calma, redirigirlos y tranquilizar al grupo", s:30, ok:true, fb:"Excelente. Asegurar el ambiente del grupo antes de mediar individualmente es la prioridad." },
@@ -96,20 +96,20 @@ const CONFLICT_STEPS = [
     ]
   },
   {
-    ctx: "Ha separado al grupo. Carlos dice que María arruinó su proyecto. María dice que él la estuvo insultando.",
+    ctx: "Ha separado al grupo. Un estudiante dice que el otro arruinó su proyecto. El otro dice que lo estuvieron insultando.",
     q: "¿Cómo recopila la información del conflicto?",
     opts: [
       { t:"Escuchar a cada uno por separado antes de emitir cualquier juicio", s:35, ok:true, fb:"Fundamental. La escucha neutral garantiza que ambas versiones sean oídas con equidad." },
-      { t:"Decidir que Carlos tiene razón porque el daño es visible", s:0, fb:"El daño visible no determina culpabilidad. Necesita escuchar ambas versiones." },
+      { t:"Decidir que uno tiene razón porque el daño es visible", s:0, fb:"El daño visible no determina culpabilidad. Necesita escuchar ambas versiones." },
       { t:"Pedirles que se sienten juntos a explicar qué pasó", s:15, fb:"Razonable pero prematuro. Primero escuche por separado para reducir la tensión." },
       { t:"Documentar y llamar a padres sin escucharlos", s:10, fb:"La documentación es necesaria pero debe ocurrir DESPUÉS de escuchar." },
     ]
   },
   {
-    ctx: "Tras escuchar a ambos, descubre que Carlos hizo comentarios hirientes y María reaccionó accidentalmente dañando el proyecto.",
+    ctx: "Tras escuchar a ambos, descubre que uno hizo comentarios hirientes y el otro reaccionó accidentalmente dañando el trabajo.",
     q: "¿Cómo facilita la resolución?",
     opts: [
-      { t:"Reunirlos: Carlos se disculpa, María ofrece reparar el proyecto juntos", s:35, ok:true, fb:"Brillante. La corresponsabilidad y la reparación son los pilares de una resolución genuina." },
+      { t:"Reunirlos: quien insultó se disculpa, quien dañó el trabajo ofrece repararlo juntos", s:35, ok:true, fb:"Brillante. La corresponsabilidad y la reparación son los pilares de una resolución genuina." },
       { t:"Sancionar a ambos por igual", s:10, fb:"Las sanciones iguales no reconocen la diferencia en las faltas cometidas." },
       { t:"Referir a la orientadora sin resolver nada en el aula", s:15, fb:"La orientadora puede apoyar, pero usted tiene herramientas para dar un primer cierre." },
       { t:"Decirles que lo resuelvan entre sí", s:0, fb:"Sin mediación docente, el conflicto puede agravarse fuera del aula." },
@@ -225,7 +225,7 @@ const TEAM_T = [
 ];
 
 // ── 8. LIDERAZGO (AI) ────────────────────────────────────────────
-const LEADER_SYSTEM = `Eres un evaluador experto en liderazgo transformacional para instituciones educativas de Costa Rica. Evalúa el mensaje que el docente escribió para motivar a su equipo dividido en el CTP Carrizal.
+const LEADER_SYSTEM = `Eres un evaluador experto en liderazgo transformacional para instituciones educativas. Evalúa el mensaje que el docente escribió para motivar a su equipo dividido.
 
 Evalúa en 4 dimensiones (0-25 cada una):
 - vision: ¿menciona objetivos o metas colectivas que unen al equipo?
@@ -251,7 +251,7 @@ const CREATIVE = [
     key:"method", label:"🎯 Metodología rediseñada",
     desc:"¿Cómo transforma la experiencia de aprendizaje en el aula?",
     opts:[
-      { id:"m1", t:"Proyecto real: conectar el contenido técnico con un problema de la comunidad de Carrizal", v:35, bold:true },
+      { id:"m1", t:"Proyecto real: conectar el contenido técnico con un problema de la comunidad local", v:35, bold:true },
       { id:"m2", t:"Continuar con el programa estándar pero con más paciencia", v:5 },
       { id:"m3", t:"Gamificación: sistema de puntos, misiones y recompensas en clase", v:30, bold:true },
       { id:"m4", t:"Trabajo en grupos mixtos con roles rotativos", v:20, bold:true },

@@ -37,7 +37,7 @@ const App = {
     // Title
     pg.innerHTML = `
       <div class="h1 mb2">Plan de Capacitación en Habilidades Blandas</div>
-      <div class="mu mb4">54 horas · 9 habilidades · 3 fases · Modalidad bimodal · CTP Carrizal</div>`;
+      <div class="mu mb4">54 horas · 9 habilidades · 3 fases · Modalidad bimodal</div>`;
 
     // Global progress card
     const done = Object.values(this.state.progress).filter(p => p.completed).length;
@@ -52,15 +52,15 @@ const App = {
       <div class="bar"><div class="fill fill-or" style="width:${pct}%"></div></div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px">
         ${[1,2,3].map(ph => {
-          const info = PHASE_INFO[ph];
-          const phMods = MODULES.filter(m => m.ph === ph);
-          const phDone = phMods.filter(m => this.state.progress[m.id]?.completed).length;
-          return `<div style="padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+      const info = PHASE_INFO[ph];
+      const phMods = MODULES.filter(m => m.ph === ph);
+      const phDone = phMods.filter(m => this.state.progress[m.id]?.completed).length;
+      return `<div style="padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
             <div class="xs bold" style="color:rgba(229,223,213,.4);text-transform:uppercase;letter-spacing:.7px">Fase ${ph} · ${info.label}</div>
             <div class="sm bold" style="margin-top:4px">${phDone}/${phMods.length} completados</div>
             <div class="xs mu mt2">${info.period} · ${info.hours}h</div>
           </div>`;
-        }).join("")}
+    }).join("")}
       </div>`;
     pg.appendChild(progCard);
 
