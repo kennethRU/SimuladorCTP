@@ -37,7 +37,7 @@ const App = {
     // Title
     pg.innerHTML = `
       <div class="h1 mb2">Plan de Capacitación en Habilidades Blandas</div>
-      <div class="mu mb4">54 horas · 9 habilidades · 3 fases · Modalidad bimodal</div>`;
+      <div class="mu mb4">54 horas · 9 habilidades · 3 fases · Modalidad bimodal · CTP Carrizal</div>`;
 
     // Global progress card
     const done = Object.values(this.state.progress).filter(p => p.completed).length;
@@ -58,7 +58,7 @@ const App = {
       return `<div style="padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
             <div class="xs bold" style="color:rgba(229,223,213,.4);text-transform:uppercase;letter-spacing:.7px">Fase ${ph} · ${info.label}</div>
             <div class="sm bold" style="margin-top:4px">${phDone}/${phMods.length} completados</div>
-            <div class="xs mu mt2">${info.period} · ${info.hours}h</div>
+            
           </div>`;
     }).join("")}
       </div>`;
@@ -76,7 +76,7 @@ const App = {
         <div class="phase-num">${ph}</div>
         <div>
           <span class="phase-label">Fase ${ph} · ${info.label}</span>
-          <span class="phase-meta">${info.period} · ${info.hours}h</span>
+          
         </div>`;
       phSection.appendChild(phHdr);
 
@@ -93,7 +93,6 @@ const App = {
           <div class="mcard-title">${mod.title}</div>
           <div class="mcard-sub">${mod.sub}</div>
           <div class="mcard-footer">
-            <span class="chip">${mod.hours}h</span>
             <span class="tag ${mod.tag}">${mod.prio}</span>
           </div>
           ${isDone ? `<div class="mcard-done">✓ Completado · +${mod.xp} XP</div>` : ""}`;
@@ -143,7 +142,7 @@ const App = {
     infoCard.className = "card card-or";
     infoCard.innerHTML = `
       <div class="xs bold mb3" style="color:rgba(229,223,213,.4);text-transform:uppercase;letter-spacing:.8px">Detalles del módulo</div>
-      ${[["⏱ Duración",`${mod.hours} horas`],["🎯 Prioridad",mod.prio],["⚡ Recompensa",`+${mod.xp} XP`],["📊 Puntaje máx.",mod.max]].map(([l,v])=>`
+      ${[["🎯 Prioridad",mod.prio],["⚡ Recompensa",`+${mod.xp} XP`],["📊 Puntaje máx.",mod.max]].map(([l,v])=>`
         <div class="info-row"><span class="mu sm">${l}</span><span class="sm bold">${v}</span></div>`).join("")}`;
     infoGrid.appendChild(infoCard);
 
