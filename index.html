@@ -8,14 +8,98 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .site-footer {
+      margin-top: 60px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      background: rgba(12,24,39,.6);
+      backdrop-filter: blur(10px);
+      padding: 28px 22px;
+    }
+    .footer-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #ff8c32, #d95800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .footer-brand-text {
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #e5dfd5;
+      line-height: 1.3;
+    }
+    .footer-brand-sub {
+      font-size: 11px;
+      color: rgba(229,223,213,.4);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+    .footer-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,.08);
+      flex-shrink: 0;
+    }
+    .footer-meta {
+      flex: 1;
+      font-size: 11.5px;
+      color: rgba(229,223,213,.35);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+    }
+    .footer-meta strong {
+      color: rgba(229,223,213,.6);
+      font-weight: 600;
+    }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255,140,50,.1);
+      border: 1px solid rgba(255,140,50,.2);
+      color: rgba(255,140,50,.8);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    @media (max-width: 600px) {
+      .footer-divider { display: none; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    }
+  </style>
 </head>
 <body>
 <div class="app">
+
   <!-- HEADER -->
   <header class="hdr">
     <div class="brand">
       <span class="pulse"></span>
-      Docentes en Acción: Plan Capacitación en Habilidades Blandas. Dra. Jinette Ugalde Naranjo
+      Docentes en Acción: Plan Capacitación en Habilidades Blandas · Dra. Jinette Ugalde Naranjo
     </div>
     <div class="hdr-right">
       <span class="mu sm" id="hdr-progress">0/9 módulos</span>
@@ -24,11 +108,29 @@
   </header>
 
   <!-- MAIN CONTENT -->
-  <main id="app">
-    <!-- Renderizado dinámicamente por app.js -->
-  </main>
-</div>
+  <main id="app"></main>
 
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">🎓</div>
+        <div>
+          <div class="footer-brand-text">Docentes en Acción</div>
+          <div class="footer-brand-sub">Simulador de Habilidades Blandas</div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-meta">
+        Con fines educativos para la tesis de la
+        <strong>Dra. Jinette Ugalde Naranjo</strong>.<br/>
+        Desarrollado por <strong>Kenneth Ramírez Ugalde</strong> · © 2026 · Todos los derechos reservados.
+      </div>
+      <div class="footer-badge">📚 Uso educativo</div>
+    </div>
+  </footer>
+
+</div>
 <script src="js/data.js"></script>
 <script src="js/sims.js"></script>
 <script src="js/app.js"></script>
