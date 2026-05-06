@@ -1,4 +1,4 @@
-# Simulador de Capacitación — CTP Carrizal
+# DEMO para Simulador de Capacitación 
 
 Plan de capacitación en habilidades blandas · 9 módulos interactivos · IA con Groq
 
