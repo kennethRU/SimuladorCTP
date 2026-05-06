@@ -37,7 +37,7 @@ const App = {
     // Title
     pg.innerHTML = `
       <div class="h1 mb2">Plan de Capacitación en Habilidades Blandas</div>
-      <div class="mu mb4">54 horas · 9 habilidades · 3 fases · Modalidad bimodal · CTP Carrizal</div>`;
+      `;
 
     // Global progress card
     const done = Object.values(this.state.progress).filter(p => p.completed).length;
