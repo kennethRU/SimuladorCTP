@@ -46,19 +46,19 @@ const ADAPT_STEPS = [
     ctx: "El lunes recibe un correo del MEP: el programa de su especialidad cambió y entra en vigor este trimestre.",
     q: "¿Cuál es su primera acción?",
     opts: [
-      { t:"Revisar el nuevo documento y mapear los cambios clave", s:30, ok:true, fb:"Excelente. Conocer el cambio antes de actuar es la base del pensamiento estratégico." },
       { t:"Contactar colegas para planificación conjunta de inmediato", s:20, fb:"Muy buena opción colaborativa. Idealmente, después de leer el documento primero." },
-      { t:"Comunicar a los estudiantes que no sabe cómo proceder", s:0, fb:"Genera incertidumbre. El docente debe ser fuente de estabilidad ante los cambios." },
+      { t:"Revisar el nuevo documento y mapear los cambios clave", s:30, ok:true, fb:"Excelente. Conocer el cambio antes de actuar es la base del pensamiento estratégico." },
       { t:"Esperar más información antes de actuar", s:5, fb:"La espera pasiva no es adaptabilidad. El cambio ya está vigente." },
+      { t:"Comunicar a los estudiantes que no sabe cómo proceder", s:0, fb:"Genera incertidumbre. El docente debe ser fuente de estabilidad ante los cambios." },
     ]
   },
   {
     ctx: "Tras revisar, nota que el 60% de sus actividades planificadas ya no aplican.",
     q: "¿Cómo prioriza su respuesta?",
     opts: [
-      { t:"Identificar competencias vigentes y rediseñar solo lo necesario", s:30, ok:true, fb:"Pensamiento eficiente: aprovecha lo funcional y adapta solo lo que cambió." },
       { t:"Mantener todo lo anterior y añadir encima las nuevas actividades", s:5, fb:"Genera sobrecarga para usted y sus estudiantes. No es viable." },
       { t:"Solicitar a la dirección una prórroga", s:10, fb:"Medida temporal razonable, pero no resuelve el problema de fondo." },
+      { t:"Identificar competencias vigentes y rediseñar solo lo necesario", s:30, ok:true, fb:"Pensamiento eficiente: aprovecha lo funcional y adapta solo lo que cambió." },
       { t:"Cancelar clases mientras define el nuevo plan", s:0, fb:"Las ausencias de lección no son una estrategia adaptativa válida." },
     ]
   },
@@ -66,10 +66,10 @@ const ADAPT_STEPS = [
     ctx: "Tras adaptar su plan, los estudiantes se muestran confundidos y resistentes al cambio.",
     q: "¿Cuál es su respuesta pedagógica?",
     opts: [
-      { t:"Detener la clase, reconocer el cambio e involucrar al grupo en la transición", s:30, ok:true, fb:"Brillante. La transparencia y la participación estudiantil son pilares de la resiliencia pedagógica." },
       { t:"Continuar: eventualmente se adaptarán", s:0, fb:"Ignorar la confusión del grupo es perder una oportunidad pedagógica clave." },
       { t:"Enviar una nota a casa explicando el cambio", s:10, fb:"Útil para familias, pero no aborda la confusión directamente en el aula." },
       { t:"Pedir al coordinador que explique el cambio al grupo", s:10, fb:"Delegar en este momento resta liderazgo pedagógico en un momento clave." },
+      { t:"Detener la clase, reconocer el cambio e involucrar al grupo en la transición", s:30, ok:true, fb:"Brillante. La transparencia y la participación estudiantil son pilares de la resiliencia pedagógica." },
     ]
   },
 ];
@@ -89,30 +89,30 @@ const CONFLICT_STEPS = [
     ctx: "Carlos y María discuten acaloradamente en el taller. Carlos acusa a María de romper su proyecto. El grupo observa en tensión.",
     q: "¿Cuál es su primera respuesta?",
     opts: [
-      { t:"Separar a ambos con calma, redirigirlos y tranquilizar al grupo", s:30, ok:true, fb:"Excelente. Asegurar el ambiente del grupo antes de mediar individualmente es la prioridad." },
       { t:"Alzar la voz para restaurar el orden", s:10, fb:"Logra calma momentánea pero puede dañar la confianza del grupo hacia el docente." },
-      { t:"Enviar a ambos a dirección de inmediato", s:5, fb:"Escalar sin mediar priva al docente de una oportunidad de liderazgo pedagógico." },
       { t:"Continuar la clase e ignorar el incidente", s:0, fb:"Ignorar un conflicto activo permite que escale y afecta toda la dinámica grupal." },
+      { t:"Separar a ambos con calma, redirigirlos y tranquilizar al grupo", s:30, ok:true, fb:"Excelente. Asegurar el ambiente del grupo antes de mediar individualmente es la prioridad." },
+      { t:"Enviar a ambos a dirección de inmediato", s:5, fb:"Escalar sin mediar priva al docente de una oportunidad de liderazgo pedagógico." },
     ]
   },
   {
     ctx: "Ha separado al grupo. Carlos dice que María arruinó su proyecto. María dice que él la estuvo insultando.",
     q: "¿Cómo recopila la información del conflicto?",
     opts: [
-      { t:"Escuchar a cada uno por separado antes de emitir cualquier juicio", s:35, ok:true, fb:"Fundamental. La escucha neutral garantiza que ambas versiones sean oídas con equidad." },
       { t:"Decidir que Carlos tiene razón porque el daño es visible", s:0, fb:"El daño visible no determina culpabilidad. Necesita escuchar ambas versiones." },
       { t:"Pedirles que se sienten juntos a explicar qué pasó", s:15, fb:"Razonable pero prematuro. Primero escuche por separado para reducir la tensión." },
       { t:"Documentar y llamar a padres sin escucharlos", s:10, fb:"La documentación es necesaria pero debe ocurrir DESPUÉS de escuchar." },
+      { t:"Escuchar a cada uno por separado antes de emitir cualquier juicio", s:35, ok:true, fb:"Fundamental. La escucha neutral garantiza que ambas versiones sean oídas con equidad." },
     ]
   },
   {
     ctx: "Tras escuchar a ambos, descubre que Carlos hizo comentarios hirientes y María reaccionó accidentalmente dañando el proyecto.",
     q: "¿Cómo facilita la resolución?",
     opts: [
-      { t:"Reunirlos: Carlos se disculpa, María ofrece reparar el proyecto juntos", s:35, ok:true, fb:"Brillante. La corresponsabilidad y la reparación son los pilares de una resolución genuina." },
       { t:"Sancionar a ambos por igual", s:10, fb:"Las sanciones iguales no reconocen la diferencia en las faltas cometidas." },
-      { t:"Referir a la orientadora sin resolver nada en el aula", s:15, fb:"La orientadora puede apoyar, pero usted tiene herramientas para dar un primer cierre." },
+      { t:"Reunirlos: Carlos se disculpa, María ofrece reparar el proyecto juntos", s:35, ok:true, fb:"Brillante. La corresponsabilidad y la reparación son los pilares de una resolución genuina." },
       { t:"Decirles que lo resuelvan entre sí", s:0, fb:"Sin mediación docente, el conflicto puede agravarse fuera del aula." },
+      { t:"Referir a la orientadora sin resolver nada en el aula", s:15, fb:"La orientadora puede apoyar, pero usted tiene herramientas para dar un primer cierre." },
     ]
   },
 ];
