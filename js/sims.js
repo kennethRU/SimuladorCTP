@@ -46,8 +46,22 @@ function optBtn(text, onClick) {
   return b;
 }
 
+// ── Shuffle (Fisher-Yates) ────────────────────────────────────────
+function shuffle(arr) {
+  const a = arr.map((opt, i) => ({ ...opt, _orig: i }));
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+
+
 function renderStepSim(container, stepsData, maxScore, intro, onDone) {
   let step = 0, sel = null, rev = false, score = 0;
+  // Shuffle options once per step at init; regenerate when step changes
+  let shuffledOpts = shuffle(stepsData[0].opts);
 
   function render() {
     container.innerHTML = "";
@@ -63,7 +77,7 @@ function renderStepSim(container, stepsData, maxScore, intro, onDone) {
     const q = h("div", "h3 mb3", stepsData[step].q);
     container.appendChild(q);
 
-    stepsData[step].opts.forEach((o, i) => {
+    shuffledOpts.forEach((o, i) => {
       const b = h("button", "opt", `<span style="font-weight:700;opacity:.4;margin-right:8px">${["A","B","C","D"][i]}.</span>${o.t}`);
       if (rev) {
         if (i === sel) b.classList.add(o.ok ? "ok" : "bad");
@@ -77,7 +91,7 @@ function renderStepSim(container, stepsData, maxScore, intro, onDone) {
     });
 
     if (rev && sel !== null) {
-      const o = stepsData[step].opts[sel];
+      const o = shuffledOpts[sel];
       container.appendChild(fb(o.ok, o.fb, o.s));
     }
 
@@ -87,7 +101,7 @@ function renderStepSim(container, stepsData, maxScore, intro, onDone) {
     if (!rev) {
       const c = btn("Confirmar respuesta", "btn-p", () => {
         if (sel === null) return;
-        score += stepsData[step].opts[sel].s;
+        score += shuffledOpts[sel].s;
         rev = true; render();
       });
       c.disabled = sel === null;
@@ -96,7 +110,10 @@ function renderStepSim(container, stepsData, maxScore, intro, onDone) {
       const isLast = step >= stepsData.length - 1;
       const nx = btn(isLast ? "Ver resultado final" : "Siguiente →", "btn-p", () => {
         if (isLast) { onDone(score, maxScore); return; }
-        step++; sel = null; rev = false; render();
+        step++;
+        sel = null; rev = false;
+        shuffledOpts = shuffle(stepsData[step].opts);
+        render();
       });
       row.appendChild(nx);
     }
@@ -115,7 +132,7 @@ const SimTime = {
     function render() {
       container.innerHTML = "";
       container.appendChild(h("div", "card card-or mb4",
-        `<div class="h3 mb2">📐 Matriz de Eisenhower</div>
+          `<div class="h3 mb2">📐 Matriz de Eisenhower</div>
          <div class="mu">Clasifique cada tarea en el cuadrante correcto usando los botones. Luego verifique.</div>`));
 
       TIME_TASKS.forEach(t => {
@@ -151,8 +168,8 @@ const SimTime = {
           const correct = assigns[t.id] === t.q;
           const correctQ = QUADS.find(q => q.id === t.q);
           const fbDiv = h("div", "task-fb", correct
-            ? `<span style="color:#2dd4a0">✅ Correcto</span> — ${t.why}`
-            : `<span style="color:#f87272">❌ Correcto: <strong>${correctQ?.label}</strong></span> — ${t.why}`);
+              ? `<span style="color:#2dd4a0">✅ Correcto</span> — ${t.why}`
+              : `<span style="color:#f87272">❌ Correcto: <strong>${correctQ?.label}</strong></span> — ${t.why}`);
           row.appendChild(fbDiv);
         }
         container.appendChild(row);
@@ -177,14 +194,14 @@ const SimTime = {
       if (!checked) {
         const allDone = Object.keys(assigns).length === TIME_TASKS.length;
         const b = btn(
-          allDone ? "✓ Verificar clasificación" : `Clasifique todas las tareas (${Object.keys(assigns).length}/8)`,
-          "btn-p mt4", () => {
-            if (!allDone) return;
-            const score = TIME_TASKS.reduce((acc, t) => acc + (assigns[t.id] === t.q ? 10 : 0), 0);
-            checked = true;
-            render();
-            setTimeout(() => onDone(score, 80), 800);
-          });
+            allDone ? "✓ Verificar clasificación" : `Clasifique todas las tareas (${Object.keys(assigns).length}/8)`,
+            "btn-p mt4", () => {
+              if (!allDone) return;
+              const score = TIME_TASKS.reduce((acc, t) => acc + (assigns[t.id] === t.q ? 10 : 0), 0);
+              checked = true;
+              render();
+              setTimeout(() => onDone(score, 80), 800);
+            });
         b.disabled = !allDone;
         container.appendChild(b);
       }
@@ -199,8 +216,8 @@ const SimTime = {
 const SimAdapt = {
   render(container, onDone) {
     renderStepSim(container, ADAPT_STEPS, 90,
-      "Tome las mejores decisiones ante un cambio curricular imprevisto del MEP.",
-      onDone);
+        "Tome las mejores decisiones ante un cambio curricular imprevisto del MEP.",
+        onDone);
   }
 };
 
@@ -216,7 +233,7 @@ const SimComm = {
       container.innerHTML = "";
 
       const intro = h("div", "card card-or mb4",
-        `<div class="mu">Un padre de familia molesto llega a su aula. Responda con empatía, datos concretos y orientación hacia soluciones. <strong>4 turnos evaluados por IA.</strong></div>`);
+          `<div class="mu">Un padre de familia molesto llega a su aula. Responda con empatía, datos concretos y orientación hacia soluciones. <strong>4 turnos evaluados por IA.</strong></div>`);
       container.appendChild(intro);
 
       const grid = h("div", "grid2");
@@ -364,8 +381,8 @@ const SimComm = {
 const SimConflict = {
   render(container, onDone) {
     renderStepSim(container, CONFLICT_STEPS, 100,
-      "Medie el conflicto entre dos estudiantes tomando las mejores decisiones en cada etapa.",
-      onDone);
+        "Medie el conflicto entre dos estudiantes tomando las mejores decisiones en cada etapa.",
+        onDone);
   }
 };
 
@@ -393,7 +410,7 @@ const SimCritical = {
 
         CAUSES.forEach(c => {
           const b = h("button", `opt ${sel.has(c.id) ? "sel" : ""}`,
-            `${sel.has(c.id) ? "☑ " : "☐ "}${c.t}`);
+              `${sel.has(c.id) ? "☑ " : "☐ "}${c.t}`);
           b.addEventListener("click", () => {
             if (sel.has(c.id)) sel.delete(c.id);
             else if (sel.size < 3) sel.add(c.id);
@@ -413,7 +430,7 @@ const SimCritical = {
 
       } else {
         const resultCard = h("div", "card card-gr mb4",
-          `<div class="sm">✅ Las causas correctas son: fatiga laboral externa, cambio metodológico sin preparación y pérdida de líderes grupales.</div>
+            `<div class="sm">✅ Las causas correctas son: fatiga laboral externa, cambio metodológico sin preparación y pérdida de líderes grupales.</div>
            <div class="xs mu mt2">Puntaje causas: ${causeScore}/45</div>`);
         container.appendChild(resultCard);
 
@@ -452,6 +469,7 @@ const SimCritical = {
 const SimEmotion = {
   render(container, onDone) {
     let step = 0, ph = "e", eSel = null, rSel = null, eOk = false, rRev = false, score = 0;
+    let shuffledRopts = [];
 
     function render() {
       container.innerHTML = "";
@@ -480,7 +498,7 @@ const SimEmotion = {
 
       } else {
         container.appendChild(h("div", `card ${eOk ? "card-gr" : "card-re"} mb4`,
-          eOk ? "✅ Identificación emocional correcta. +5 pts" : `❌ La emoción más probable es: "${cur.eOpts[cur.ce]}"`));
+            eOk ? "✅ Identificación emocional correcta. +5 pts" : `❌ La emoción más probable es: "${cur.eOpts[cur.ce]}"`));
 
         container.appendChild(h("div", "h3 mb3", cur.rq));
         cur.rOpts.forEach((o, i) => {
@@ -491,7 +509,7 @@ const SimEmotion = {
         });
 
         if (rRev && rSel !== null) {
-          container.appendChild(fb(cur.rOpts[rSel].ok, cur.rOpts[rSel].fb, cur.rOpts[rSel].s));
+          container.appendChild(fb(shuffledRopts[rSel].ok, shuffledRopts[rSel].fb, shuffledRopts[rSel].s));
         }
 
         const row = h("div", "mt4", "");
@@ -499,7 +517,7 @@ const SimEmotion = {
         if (!rRev) {
           const c = btn("Confirmar respuesta", "btn-p", () => {
             if (rSel === null) return;
-            score += cur.rOpts[rSel].s;
+            score += shuffledRopts[rSel].s;
             rRev = true; render();
           });
           c.disabled = rSel === null;
@@ -508,7 +526,7 @@ const SimEmotion = {
           const isLast = step >= EMOTS.length - 1;
           row.appendChild(btn(isLast ? "Ver resultado final" : "Siguiente situación →", "btn-p", () => {
             if (isLast) { onDone(score, 175); return; }
-            step++; ph = "e"; eSel = null; rSel = null; eOk = false; rRev = false; render();
+            step++; ph = "e"; eSel = null; rSel = null; eOk = false; rRev = false; shuffledRopts = []; render();
           }));
         }
         container.appendChild(row);
@@ -528,7 +546,7 @@ const SimTeam = {
     function render() {
       container.innerHTML = "";
       container.appendChild(h("div", "card card-or mb4",
-        `<div class="h3 mb2">🎪 Feria Vocacional del CTP Carrizal</div>
+          `<div class="h3 mb2">🎪 Feria Vocacional del CTP Carrizal</div>
          <div class="mu">Deben organizarla en 2 semanas. Asigne cada tarea al miembro más adecuado según su perfil.</div>`));
 
       const grid = h("div", "grid2");
@@ -605,7 +623,7 @@ const SimLeader = {
     function render() {
       container.innerHTML = "";
       container.appendChild(h("div", "card card-or mb4",
-        `<div class="h3 mb2">📍 Contexto del liderazgo</div>
+          `<div class="h3 mb2">📍 Contexto del liderazgo</div>
          <div class="mu">Su departamento está dividido en dos grupos con visiones distintas. Hay tensión y desmotivación. Redacte un mensaje que los motive y los una considerando: visión compartida, reconocimiento del esfuerzo, propuesta concreta y tono empático.</div>`));
 
       const grid = h("div", "grid2");
@@ -716,7 +734,7 @@ const SimCreative = {
     function render() {
       container.innerHTML = "";
       container.appendChild(h("div", "card card-or mb4",
-        `<div class="h3 mb2">📍 El reto: 40% de ausencias recurrentes</div>
+          `<div class="h3 mb2">📍 El reto: 40% de ausencias recurrentes</div>
          <div class="mu">Los estudiantes que asisten también parecen desmotivados. Diseñe una estrategia creativa seleccionando un componente de cada categoría.</div>`));
 
       CREATIVE.forEach(cat => {
@@ -729,7 +747,7 @@ const SimCreative = {
 
         cat.opts.forEach(o => {
           const b = h("button", `opt ${picks[cat.key] === o.id ? "sel" : ""}`,
-            `${picks[cat.key] === o.id ? "▶ " : "○ "}${o.t}${o.bold ? '<span class="tag tag-or" style="margin-left:8px;font-size:10px">Innovador</span>' : ""}`);
+              `${picks[cat.key] === o.id ? "▶ " : "○ "}${o.t}${o.bold ? '<span class="tag tag-or" style="margin-left:8px;font-size:10px">Innovador</span>' : ""}`);
           if (!submitted) {
             b.addEventListener("click", () => {
               picks[cat.key] = o.id;
