@@ -16,9 +16,9 @@ const MODULES = [
 ];
 
 const PHASE_INFO = {
-  1: { label:"Correctiva",  period:"Meses 1-3", hours:16 },
-  2: { label:"Preventiva",  period:"Meses 4-6", hours:24 },
-  3: { label:"Desarrollo",  period:"Meses 7-9", hours:14 },
+  1: { label:"Correctiva",  period:"", hours:16 },
+  2: { label:"Preventiva",  period:"", hours:24 },
+  3: { label:"Desarrollo",  period:"", hours:14 },
 };
 
 // ── 1. MANEJO DEL TIEMPO ─────────────────────────────────────────
